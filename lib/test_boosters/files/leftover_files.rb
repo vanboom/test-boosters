@@ -30,7 +30,8 @@ module TestBoosters
       end
 
       def sorted_files_by_file_size
-        @sorted_files_by_file_size ||= existing_files.sort_by { |file| -File.size(file) }
+        # VB weight features specs as very large files.
+        @sorted_files_by_file_size ||= existing_files.sort_by { |file| file.include?("feature") ? -File.size(file) * 100 : -File.size(file) }
       end
 
       def existing_files
