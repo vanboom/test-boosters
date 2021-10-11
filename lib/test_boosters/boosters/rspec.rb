@@ -24,7 +24,7 @@ module TestBoosters
 
       def rspec_options
         @rspec_options ||= begin
-          # VB: output_formatter = ENV.fetch("TB_RSPEC_FORMATTER", "progress")
+          # VB output_formatter = ENV.fetch("TB_RSPEC_FORMATTER", "progress")
           # rubocop:disable LineLength
           # VB:  don't set the formatter
           # "#{ENV["TB_RSPEC_OPTIONS"]} --format #{output_formatter} --require #{formatter_path} --format SemaphoreFormatter --out #{report_path}"
