@@ -2,6 +2,7 @@ module TestBoosters
   module Boosters
     class Rspec < Base
       def initialize
+        puts "The split configuration path is #{split_configuration_path}"
         super(file_pattern, exclude_pattern, split_configuration_path, command)
       end
 
@@ -23,18 +24,20 @@ module TestBoosters
 
       def rspec_options
         @rspec_options ||= begin
-          output_formatter = ENV.fetch("TB_RSPEC_FORMATTER", "documentation")
+          # VB: output_formatter = ENV.fetch("TB_RSPEC_FORMATTER", "progress")
           # rubocop:disable LineLength
-          "#{ENV["TB_RSPEC_OPTIONS"]} --format #{output_formatter} --require #{formatter_path} --format SemaphoreFormatter --out #{report_path}"
+          # VB:  don't set the formatter
+          # "#{ENV["TB_RSPEC_OPTIONS"]} --format #{output_formatter} --require #{formatter_path} --format SemaphoreFormatter --out #{report_path}"
+          "#{ENV["TB_RSPEC_OPTIONS"]} --require #{formatter_path} --format SemaphoreFormatter --out #{report_path}"
         end
       end
 
       def report_path
-        @report_path ||= ENV["REPORT_PATH"] || "#{ENV["HOME"]}/rspec_report.json"
+        @report_path ||= ENV["REPORT_PATH"] || "tmp/rspec_report.json"
       end
 
       def split_configuration_path
-        ENV["RSPEC_SPLIT_CONFIGURATION_PATH"] || "#{ENV["HOME"]}/rspec_split_configuration.json"
+        ENV["RSPEC_SPLIT_CONFIGURATION_PATH"] || "spec/rspec_split_configuration.json"
       end
 
       def formatter_path
