@@ -14,7 +14,7 @@ module TestBoosters
       end
 
       def after_job
-        TestBoosters::InsightsUploader.upload("rspec", report_path)
+        # TestBoosters::InsightsUploader.upload("rspec", report_path)
       end
 
       def command
