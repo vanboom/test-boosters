@@ -25,11 +25,19 @@ module TestBoosters
     end
 
     def evaluate(command)
-      with_clean_env { `#{command}` }
+      `#{command}`
     end
 
     def with_clean_env
-      defined?(Bundler) ? Bundler.with_clean_env { yield } : yield
+      if defined?(Bundler)
+        if Bundler.respond_to?(:with_unbundled_env)
+          Bundler.with_unbundled_env { yield }
+        else
+          Bundler.with_clean_env { yield }
+        end
+      else
+        yield
+      end
     end
 
     def display_title(title)
